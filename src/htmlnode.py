@@ -21,3 +21,18 @@ class HTMLNode:
             new_string += f' {key}="{value}"'
         return new_string
         
+class LeafNode(HTMLNode):
+    def __init__(self,tag:str,value:str,props:dict|None = None):
+        super().__init__(tag,value,props=props)
+        
+    def to_html(self)->str:
+        attrs = ''
+        if self.value == None:
+            raise ValueError
+        if self.tag == None:
+            return f"{self.value}"
+        if self.props != None:
+            for key, value in self.props.items():
+                attrs += f' {key}="{value}"'
+                
+        return f"<{self.tag}{attrs}>{self.value}</{self.tag}>"
