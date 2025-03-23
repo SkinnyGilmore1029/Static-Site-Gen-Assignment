@@ -26,7 +26,7 @@ class TestTextNode(unittest.TestCase):
     def test_repr(self):
         node = TextNode("This is a text node", TextType.Normal_Text, "https://www.boot.dev")
         self.assertEqual(
-            "TextNode(This is a text node, text, https://www.boot.dev)", repr(node)
+            f"TextNode(This is a text node, {TextType.Normal_Text.value}, https://www.boot.dev)", repr(node)
         )
 
 
@@ -38,7 +38,7 @@ class TestTextNodeToHTMLNode(unittest.TestCase):
         self.assertEqual(html_node.value, "This is a text node")
 
     def test_image(self):
-        node = TextNode("This is an image", TextType.IMAGE, "https://www.boot.dev")
+        node = TextNode("This is an image", TextType.Images, "https://www.boot.dev")
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.value, "")
