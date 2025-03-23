@@ -1,25 +1,21 @@
 from textnode import TextType,TextNode
 
-
-def split_nodes_delimiter(old_nodes:list[object], delimiter, text_type)->list[object]: #just so i remember what i am working with and what it wants returned Object is a Node
+def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
-    for node in old_nodes:
-        if node.text_type != TextType.Normal_Text:
-            new_nodes.append(node)
-        else:
-            if delimiter in node.text:
-                first = node.text.find(delimiter)
-                last = node.text.find(delimiter,first + len(delimiter))
-                if last == -1:
-                    raise Exception("Invalid markdown: missing closing delimiter")
-                before_text = node.text[:first]
-                special_text = node.text[first + len(delimiter):last]
-                after_text = node.text[last + len(delimiter):]
-                if before_text:
-                    new_nodes.append(TextNode(before_text, TextType.Normal_Text))
-                new_nodes.append(TextNode(special_text, text_type))
-                if after_text:
-                    new_nodes.append(TextNode(after_text, TextType.Normal_Text))
+    for old_node in old_nodes:
+        if old_node.text_type != TextType.Normal_Text:
+            new_nodes.append(old_node)
+            continue
+        split_nodes = []
+        sections = old_node.text.split(delimiter)
+        if len(sections) % 2 == 0:
+            raise ValueError("invalid markdown, formatted section not closed")
+        for i in range(len(sections)):
+            if sections[i] == "":
+                continue
+            if i % 2 == 0:
+                split_nodes.append(TextNode(sections[i], TextType.Normal_Text))
             else:
-                new_nodes.append(node)
+                split_nodes.append(TextNode(sections[i], text_type))
+        new_nodes.extend(split_nodes)
     return new_nodes
