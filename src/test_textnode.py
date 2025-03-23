@@ -1,5 +1,6 @@
 import unittest
 from textnode import TextNode, TextType, text_node_to_html_node
+from split_delimiter import split_nodes_delimiter
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
