@@ -36,3 +36,18 @@ class LeafNode(HTMLNode):
                 attrs += f' {key}="{value}"'
                 
         return f"<{self.tag}{attrs}>{self.value}</{self.tag}>"
+    
+class ParentNode(HTMLNode):
+    def __init__(self,tag:str,children:list,props:dict|None = None):
+        super().__init__(tag,children=children,props=props)
+    
+    def to_html(self):
+        if not self.tag: # check to see if tag is there..also helps break recursion
+            raise ValueError("tag is not correct")
+        if self.children == []: # checks to make sure its not an empty list... also helps break recursion
+            raise ValueError("cannot be an empty list")
+        results = '' #starting point for the string
+        for child in self.children: # loops thro self.children and adds to_html to results
+            results += child.to_html()
+        props_string = self.props_to_html()
+        return f"<{self.tag}{props_string}>{results}</{self.tag}>" # returns results 
