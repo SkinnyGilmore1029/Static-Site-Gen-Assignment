@@ -55,26 +55,26 @@ class TestInlineMarkdown(unittest.TestCase):
         )
 
     def test_delim_italic(self):
-        node = TextNode("This is text with an _italic_ word", TextType.TEXT)
-        new_nodes = split_nodes_delimiter([node], "_", TextType.ITALIC)
+        node = TextNode("This is text with an _italic_ word", TextType.Normal_Text)
+        new_nodes = split_nodes_delimiter([node], "_", TextType.Italic_text)
         self.assertListEqual(
             [
-                TextNode("This is text with an ", TextType.TEXT),
-                TextNode("italic", TextType.ITALIC),
-                TextNode(" word", TextType.TEXT),
+                TextNode("This is text with an ", TextType.Normal_Text),
+                TextNode("italic", TextType.Italic_text),
+                TextNode(" word", TextType.Normal_Text),
             ],
             new_nodes,
         )
 
     def test_delim_bold_and_italic(self):
-        node = TextNode("**bold** and _italic_", TextType.TEXT)
-        new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
-        new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
+        node = TextNode("**bold** and _italic_", TextType.Normal_Text)
+        new_nodes = split_nodes_delimiter([node], "**", TextType.Bold_Text)
+        new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.Italic_text)
         self.assertEqual(
             [
-                TextNode("bold", TextType.BOLD),
-                TextNode(" and ", TextType.TEXT),
-                TextNode("italic", TextType.ITALIC),
+                TextNode("bold", TextType.Bold_Text),
+                TextNode(" and ", TextType.Normal_Text),
+                TextNode("italic", TextType.Italic_text),
             ],
             new_nodes,
         )
@@ -135,16 +135,16 @@ class TestInlineMarkdown(unittest.TestCase):
     def test_split_links(self):
         node = TextNode(
             "This is text with a [link](https://boot.dev) and [another link](https://blog.boot.dev) with text that follows",
-            TextType.TEXT,
+            TextType.Normal_Text,
         )
         new_nodes = split_nodes_link([node])
         self.assertListEqual(
             [
-                TextNode("This is text with a ", TextType.TEXT),
-                TextNode("link", TextType.LINK, "https://boot.dev"),
-                TextNode(" and ", TextType.TEXT),
-                TextNode("another link", TextType.LINK, "https://blog.boot.dev"),
-                TextNode(" with text that follows", TextType.TEXT),
+                TextNode("This is text with a ", TextType.Normal_Text),
+                TextNode("link", TextType.Links, "https://boot.dev"),
+                TextNode(" and ", TextType.Normal_Text),
+                TextNode("another link", TextType.Links, "https://blog.boot.dev"),
+                TextNode(" with text that follows", TextType.Normal_Text),
             ],
             new_nodes,
         )
@@ -155,16 +155,16 @@ class TestInlineMarkdown(unittest.TestCase):
         )
         self.assertListEqual(
             [
-                TextNode("This is ", TextType.TEXT),
-                TextNode("text", TextType.BOLD),
-                TextNode(" with an ", TextType.TEXT),
-                TextNode("italic", TextType.ITALIC),
-                TextNode(" word and a ", TextType.TEXT),
-                TextNode("code block", TextType.CODE),
-                TextNode(" and an ", TextType.TEXT),
-                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
-                TextNode(" and a ", TextType.TEXT),
-                TextNode("link", TextType.LINK, "https://boot.dev"),
+                TextNode("This is ", TextType.Normal_Text),
+                TextNode("text", TextType.Bold_Text),
+                TextNode(" with an ", TextType.Normal_Text),
+                TextNode("italic", TextType.Italic_text),
+                TextNode(" word and a ", TextType.Normal_Text),
+                TextNode("code block", TextType.Code_Text),
+                TextNode(" and an ", TextType.Normal_Text),
+                TextNode("image", TextType.Images, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(" and a ", TextType.Normal_Text),
+                TextNode("link", TextType.Links, "https://boot.dev"),
             ],
             nodes,
         )
