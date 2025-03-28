@@ -44,8 +44,8 @@ class ParentNode(HTMLNode):
     def to_html(self):
         if not self.tag: # check to see if tag is there..also helps break recursion
             raise ValueError("tag is not correct")
-        if self.children == []: # checks to make sure its not an empty list... also helps break recursion
-            raise ValueError("cannot be an empty list")
+        if not self.children:  # Handle if no children exist
+            return f"<{self.tag}{self.props_to_html()}></{self.tag}>"
         results = '' #starting point for the string
         for child in self.children: # loops thro self.children and adds to_html to results
             results += child.to_html()
