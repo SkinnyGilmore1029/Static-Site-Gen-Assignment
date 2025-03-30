@@ -12,18 +12,19 @@ template_path = "./template.html"
 
 def main():
     print("Deleting public directory...")
-    if os.path.exists(dir_path_public):
-        shutil.rmtree(dir_path_public)
+    # Clean public directory
+    if os.path.exists("public"):
+        shutil.rmtree("public")
+    os.makedirs("public", exist_ok=True)
 
-    print("Copying static files to public directory...")
-    copy_files_recursive(dir_path_static, dir_path_public)
+    # Use your copy_files_recursive function to copy static files to public
+    copy_files_recursive("static", "public")
 
-    print("Generating page...")
+    # Generate the index page
     generate_page(
-        os.path.join(dir_path_content, "index.md"),
-        template_path,
-        os.path.join(dir_path_public, "index.html"),
+        "content/index.md",
+        "template.html",
+        "public/index.html"
     )
-
 
 main()

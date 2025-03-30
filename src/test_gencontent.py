@@ -45,6 +45,9 @@ no title
         except Exception as e:
             pass
 
+    def test_eq_whitespace(self):
+        actual = extract_title("#   Title with spaces   ")
+        self.assertEqual(actual, "Title with spaces")
 
 if __name__ == "__main__":
     unittest.main()
