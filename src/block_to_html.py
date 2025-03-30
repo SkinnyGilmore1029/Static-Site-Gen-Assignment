@@ -32,8 +32,6 @@ def text_to_children(text):
     # Start with a single TextNode containing the entire text
     nodes = [TextNode(text, TextType.Normal_Text)]
     
-    # Debug print
-    print("Before splitting links:", [node.text for node in nodes])
     
     # Process each inline delimiter
     nodes = split_nodes_delimiter(nodes, "**", TextType.Bold_Text)

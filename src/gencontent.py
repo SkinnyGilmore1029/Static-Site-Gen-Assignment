@@ -24,6 +24,7 @@ def generate_page(from_path, template_path, dest_path):
         os.makedirs(dest_dir_path, exist_ok=True)
     to_file = open(dest_path, "w")
     to_file.write(template)
+    to_file.close()
 
 
 def extract_title(md):
