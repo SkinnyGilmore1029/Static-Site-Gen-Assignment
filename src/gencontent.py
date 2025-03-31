@@ -4,6 +4,7 @@ from block_to_html import markdown_to_html_node
 
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
+    print(f"Debug: basepath used in generate_pages_recursive -> {basepath}")
     for filename in os.listdir(dir_path_content):
         from_path = os.path.join(dir_path_content, filename)
         dest_path = os.path.join(dest_dir_path, filename)
@@ -15,6 +16,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, bas
 
 
 def generate_page(from_path, template_path, dest_path, basepath):
+    print(f"Debug: basepath used in generate_pages_recursive -> {basepath}")
     print(f" * {from_path} {template_path} -> {dest_path}")
     from_file = open(from_path, "r")
     markdown_content = from_file.read()
